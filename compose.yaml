@@ -1,0 +1,19 @@
+services:
+  voicevox_ros2:
+    build:
+      context: .
+    container_name: voicevox_ros2
+    devices:
+      - "/dev/snd:/dev/snd"
+    environment:
+      - VOICEVOX_ENGINE_DIR=/voicevox_engine
+    stdin_open: true
+    tty: true
+    command: >
+      bash -lc "source /opt/ros/jazzy/setup.bash &&
+                source /ros2_voicevox_ws/install/setup.bash &&
+                ros2 run voicevox_ros2 tts_node
+                  --ros-args
+                  -p engine_dir:=/voicevox_engine
+                  -p vvm_file:=0.vvm
+                  -p style_id:=0"
