@@ -7,6 +7,8 @@
 - Python パッケージ管理: uv
 - TTSエンジン:VOICEVOX CORE 0.16.x 系 (Python wheel + engine一式)
 
+hhhh
+hhhh
 
 ## 構成
 ```
