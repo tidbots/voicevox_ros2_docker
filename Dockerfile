@@ -79,4 +79,4 @@ ENV VOICEVOX_ENGINE_DIR=/voicevox_engine
 #
 # コンテナ内で:
 #   source /opt/ros/jazzy/setup.bash
-
+CMD ["bash"]
