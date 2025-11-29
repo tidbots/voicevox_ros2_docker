@@ -1,2 +1,0 @@
-[console_scripts]
-tts_node = voicevox_ros2.tts_node:main

@@ -1,1 +1,0 @@
-/home/roboworks/ros2_voicevox_ws/src/voicevox_ros2/setup.py
