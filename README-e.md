@@ -98,23 +98,28 @@ Publish text to the `/tts_text` topic to synthesize speech.
 
 ### Speech Test
 
-Run the following commands from another terminal.
+#### Method 1: Connect to Container First
+
+```bash
+# Connect to the container from another terminal
+docker compose exec voicevox_ros2 bash
+
+# Run inside the container
+ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+
+# Speak with specific style_id
+ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
+ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
+```
+
+#### Method 2: Run Directly from Host
 
 ```bash
 # Default speaker
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: 'こんにちは'\" -1"
 
-# Speak with style_id=1
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
-
-# Speak with style_id=8
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
-```
-
-### Open a Shell Inside the Container
-
-```bash
-docker compose exec voicevox_ros2 bash
+# Speak with specific style_id
+docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: '[8] 別の話者です'\" -1"
 ```
 
 ## ROS2 Interface

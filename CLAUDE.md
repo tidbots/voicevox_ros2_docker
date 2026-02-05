@@ -75,7 +75,14 @@ colcon test-result --verbose
 
 ## Publishing Text for TTS
 
+**Method 1: Connect to container first**
 ```bash
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者です'" -1
+docker compose exec voicevox_ros2 bash
+ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者です'" -1
+```
+
+**Method 2: Run directly from host**
+```bash
+docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: 'こんにちは'\" -1"
 ```

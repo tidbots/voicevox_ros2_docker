@@ -62,8 +62,11 @@ RUN . /opt/ros/jazzy/setup.sh && \
 ENV ROS_DISTRO=jazzy
 ENV VOICEVOX_ENGINE_DIR=/voicevox_engine
 
-# .bashrc
-RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc
+# シェル環境設定（.bashrc と .bash_profile 両方に追加）
+RUN echo "source /opt/ros/jazzy/setup.bash" >> ~/.bashrc && \
+    echo "source /ros2_voicevox_ws/.venv/bin/activate" >> ~/.bashrc && \
+    echo "source /ros2_voicevox_ws/install/setup.bash" >> ~/.bashrc && \
+    cp ~/.bashrc ~/.bash_profile
 
 
 # 使い方:

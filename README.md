@@ -98,23 +98,28 @@ docker run --rm -it --device /dev/snd --network host voicevox_ros2
 
 ### 発話テスト
 
-別ターミナルから以下のコマンドを実行します。
+#### 方法1: コンテナに接続してから実行
+
+```bash
+# 別ターミナルからコンテナに接続
+docker compose exec voicevox_ros2 bash
+
+# コンテナ内で実行
+ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+
+# style_id を指定して発話
+ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
+ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
+```
+
+#### 方法2: ホストから直接実行
 
 ```bash
 # デフォルト話者
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: 'こんにちは'\" -1"
 
-# style_id=1 で発話
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
-
-# style_id=8 で発話
-docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
-```
-
-### コンテナ内でシェルを起動する場合
-
-```bash
-docker compose exec voicevox_ros2 bash
+# style_id を指定して発話
+docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: '[8] 別の話者です'\" -1"
 ```
 
 ## ROS2 インターフェース
