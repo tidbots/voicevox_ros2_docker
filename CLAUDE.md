@@ -76,6 +76,6 @@ colcon test-result --verbose
 ## Publishing Text for TTS
 
 ```bash
-ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'"
-ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者です'"
+docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者です'" -1
 ```

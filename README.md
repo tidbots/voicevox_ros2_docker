@@ -83,25 +83,27 @@ docker run --rm -it --device /dev/snd --network host voicevox_ros2
 
 ## 動作確認
 
-コンテナ内で `/tts_text` トピックに文字列を publish すると発話します。
-
-### 別ターミナルからコンテナに接続
-
-```bash
-docker compose exec voicevox_ros2 bash
-```
+`/tts_text` トピックに文字列を publish すると発話します。
 
 ### 発話テスト
 
+別ターミナルから以下のコマンドを実行します。
+
 ```bash
 # デフォルト話者
-ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
+docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: 'こんにちは'" -1
 
 # style_id=1 で発話
-ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
+docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[1] おはようございます'" -1
 
 # style_id=8 で発話
-ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
+docker compose exec voicevox_ros2 ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃべります'" -1
+```
+
+### コンテナ内でシェルを起動する場合
+
+```bash
+docker compose exec voicevox_ros2 bash
 ```
 
 ## ROS2 インターフェース
