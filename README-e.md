@@ -116,10 +116,10 @@ ros2 topic pub /tts_text std_msgs/msg/String "data: '[8] 別の話者でしゃ�
 
 ```bash
 # Default speaker
-docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: 'こんにちは'\" -1"
+docker compose exec voicevox_ros2 bash -c "source /etc/profile.d/ros2_setup.sh && ros2 topic pub /tts_text std_msgs/msg/String \"data: 'こんにちは'\" -1"
 
 # Speak with specific style_id
-docker compose exec voicevox_ros2 bash -lc "ros2 topic pub /tts_text std_msgs/msg/String \"data: '[8] 別の話者です'\" -1"
+docker compose exec voicevox_ros2 bash -c "source /etc/profile.d/ros2_setup.sh && ros2 topic pub /tts_text std_msgs/msg/String \"data: '[8] 別の話者です'\" -1"
 ```
 
 ## ROS2 Interface
