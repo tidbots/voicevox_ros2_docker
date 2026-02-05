@@ -36,7 +36,9 @@ voicevox_ros2_docker/
             │   └── voicevox_ros2
             ├── voicevox_ros2/
             │   ├── __init__.py
-            │   └── tts_node.py       # TTS ノード実装
+            │   ├── tts_node.py           # TTS ノード実装
+            │   ├── tts_client.py         # TTS クライアントクラス
+            │   └── tts_client_example.py # サンプルプログラム
             └── test/
                 ├── test_copyright.py
                 ├── test_flake8.py
@@ -142,6 +144,56 @@ docker compose exec voicevox_ros2 bash -c "source /etc/profile.d/ros2_setup.sh &
 
 - **デフォルト話者**: `"data: 'テキスト'"`
 - **話者指定**: `"data: '[style_id] テキスト'"` （例: `"data: '[8] こんにちは'"`)
+
+## Python からの使用
+
+### サンプルプログラムの実行
+
+```bash
+# コンテナ内で
+ros2 run voicevox_ros2 tts_client_example
+```
+
+### 自作ノードからの使用
+
+```python
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MyNode(Node):
+    def __init__(self):
+        super().__init__('my_node')
+        self.tts_pub = self.create_publisher(String, '/tts_text', 10)
+
+    def speak(self, text: str, style_id: int = None):
+        msg = String()
+        if style_id is not None:
+            msg.data = f'[{style_id}] {text}'
+        else:
+            msg.data = text
+        self.tts_pub.publish(msg)
+
+# 使用例
+node = MyNode()
+node.speak('こんにちは')           # デフォルト話者
+node.speak('ずんだもんなのだ', 3)  # ずんだもん
+node.speak('春日部つむぎだよ', 8)  # 春日部つむぎ
+```
+
+### VoicevoxClient クラスの使用
+
+```python
+from voicevox_ros2.tts_client import VoicevoxClient
+
+class MyNode(Node):
+    def __init__(self):
+        super().__init__('my_node')
+        self.tts = VoicevoxClient(self)
+
+    def do_something(self):
+        self.tts.speak('処理が完了しました')
+        self.tts.speak('ずんだもんなのだ', style_id=3)
+```
 
 ## 話者・スタイル一覧
 

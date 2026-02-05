@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'tts_node = voicevox_ros2.tts_node:main',
+            'tts_client_example = voicevox_ros2.tts_client_example:main',
         ],
     },
 )
